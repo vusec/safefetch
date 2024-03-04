@@ -2,7 +2,7 @@
 VERSION = 5
 PATCHLEVEL = 11
 SUBLEVEL = 0
-EXTRAVERSION = -safefetch
+EXTRAVERSION = -baseline
 
 NAME = 💕 Valentine's Day Edition 💕
 
