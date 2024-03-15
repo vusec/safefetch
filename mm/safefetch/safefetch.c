@@ -357,7 +357,7 @@ inline unsigned long df_copy_from_user(
     ret = copy_range(user_src, kern_dst, user_size); 
 
     if (unlikely(ret == -1)){
-       printk(KERN_INFO, "[SafeFetch][Warning] df_copy_from_user: Failed copy_range reverting to default implementation\n");
+       printk(KERN_INFO "[SafeFetch][Warning] df_copy_from_user: Failed copy_range reverting to default implementation\n");
        return COPY_FUNC((void *)kern_dst, (__force void *)user_src, user_size);
     }
     
