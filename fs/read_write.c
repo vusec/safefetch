@@ -25,6 +25,13 @@
 #include <linux/uaccess.h>
 #include <asm/unistd.h>
 
+#ifdef CONFIG_SAFEFETCH
+#include <linux/safefetch.h>
+#include <linux/region_allocator.h>
+#include <linux/mem_range.h>
+#include <linux/safefetch_static_keys.h>
+#endif
+
 const struct file_operations generic_ro_fops = {
 	.llseek		= generic_file_llseek,
 	.read_iter	= generic_file_read_iter,
@@ -667,6 +674,9 @@ ssize_t ksys_write(unsigned int fd, const char __user *buf, size_t count)
 SYSCALL_DEFINE3(write, unsigned int, fd, const char __user *, buf,
 		size_t, count)
 {
+#ifdef SAFEFETCH_WHITELISTING
+    current->df_prot_struct_head.is_whitelisted = 1;
+#endif
 	return ksys_write(fd, buf, count);
 }
 
@@ -719,6 +729,9 @@ ssize_t ksys_pwrite64(unsigned int fd, const char __user *buf,
 SYSCALL_DEFINE4(pwrite64, unsigned int, fd, const char __user *, buf,
 			 size_t, count, loff_t, pos)
 {
+#ifdef SAFEFETCH_WHITELISTING
+    current->df_prot_struct_head.is_whitelisted = 1;
+#endif
 	return ksys_pwrite64(fd, buf, count, pos);
 }
 
@@ -1052,6 +1065,9 @@ SYSCALL_DEFINE3(readv, unsigned long, fd, const struct iovec __user *, vec,
 SYSCALL_DEFINE3(writev, unsigned long, fd, const struct iovec __user *, vec,
 		unsigned long, vlen)
 {
+#ifdef SAFEFETCH_WHITELISTING
+    current->df_prot_struct_head.is_whitelisted = 1;
+#endif
 	return do_writev(fd, vec, vlen, 0);
 }
 
@@ -1087,7 +1103,13 @@ SYSCALL_DEFINE6(pwritev2, unsigned long, fd, const struct iovec __user *, vec,
 		unsigned long, vlen, unsigned long, pos_l, unsigned long, pos_h,
 		rwf_t, flags)
 {
+#ifdef SAFEFETCH_WHITELISTING
+    loff_t pos;
+    current->df_prot_struct_head.is_whitelisted = 1;
+	pos = pos_from_hilo(pos_h, pos_l);
+#else
 	loff_t pos = pos_from_hilo(pos_h, pos_l);
+#endif
 
 	if (pos == -1)
 		return do_writev(fd, vec, vlen, flags);

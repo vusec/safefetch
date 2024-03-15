@@ -45,6 +45,13 @@
 
 #include "locking/rtmutex_common.h"
 
+#ifdef CONFIG_SAFEFETCH
+#include <linux/safefetch.h>
+#include <linux/region_allocator.h>
+#include <linux/mem_range.h>
+#include <linux/safefetch_static_keys.h>
+#endif
+
 /*
  * READ this before attempting to hack on futexes!
  *
@@ -3792,6 +3799,10 @@ SYSCALL_DEFINE6(futex, u32 __user *, uaddr, int, op, u32, val,
 	u32 val2 = 0;
 	int cmd = op & FUTEX_CMD_MASK;
 
+#ifdef SAFEFETCH_WHITELISTING
+    current->df_prot_struct_head.is_whitelisted = 1;
+#endif
+
 	if (utime && (cmd == FUTEX_WAIT || cmd == FUTEX_LOCK_PI ||
 		      cmd == FUTEX_WAIT_BITSET ||
 		      cmd == FUTEX_WAIT_REQUEUE_PI)) {
@@ -3987,6 +3998,10 @@ SYSCALL_DEFINE6(futex_time32, u32 __user *, uaddr, int, op, u32, val,
 	ktime_t t, *tp = NULL;
 	int val2 = 0;
 	int cmd = op & FUTEX_CMD_MASK;
+
+#ifdef SAFEFETCH_WHITELISTING
+    current->df_prot_struct_head.is_whitelisted = 1;
+#endif
 
 	if (utime && (cmd == FUTEX_WAIT || cmd == FUTEX_LOCK_PI ||
 		      cmd == FUTEX_WAIT_BITSET ||

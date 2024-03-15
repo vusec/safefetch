@@ -43,19 +43,6 @@
 #include <linux/safefetch_static_keys.h>
 #ifdef SAFEFETCH_WHITELISTING
 #warning "Using DFCACHER whitelisting"
-static noinline void should_whitelist(unsigned long syscall_nr){
-    switch(syscall_nr){
-		case __NR_futex:
-		case __NR_execve:                       
-		case __NR_writev:
-		case __NR_pwritev2:
-		case __NR_pwrite64:
-		case __NR_write:
-                                current->df_prot_struct_head.is_whitelisted = 1;
-                                return;
-    }
-    current->df_prot_struct_head.is_whitelisted = 0;
-}
 #endif
 #endif
 
@@ -95,9 +82,6 @@ __visible noinstr void do_syscall_64(unsigned long nr, struct pt_regs *regs)
 #endif
 
 	nr = syscall_enter_from_user_mode(regs, nr);
-#if defined(CONFIG_SAFEFETCH) && defined(SAFEFETCH_WHITELISTING)
-        should_whitelist(nr);
-#endif
 
 
 

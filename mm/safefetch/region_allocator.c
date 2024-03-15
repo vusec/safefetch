@@ -125,7 +125,13 @@ dskip:
 #warning "Region functions not inlined"
 // TODO Find a smarter way to do all of these includes (looks sloppy now)
 // Called on syscall exit to remove extra regions except one.
-noinline void reset_regions(void) {    
+noinline void reset_regions(void) {  
+#ifdef SAFEFETCH_WHITELISTING
+   if (current->df_prot_struct_head.is_whitelisted) {
+     current->df_prot_struct_head.is_whitelisted = 0;
+     return;
+   }
+#endif  
   if (SAFEFETCH_MEM_RANGE_INIT_FLAG) {  
     /* Reset the range first if by some unfortunate incident 
        we get rescheduled by an interrupt here (that uses current)

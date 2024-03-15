@@ -75,6 +75,13 @@
 
 #include <trace/events/sched.h>
 
+#ifdef CONFIG_SAFEFETCH
+#include <linux/safefetch.h>
+#include <linux/region_allocator.h>
+#include <linux/mem_range.h>
+#include <linux/safefetch_static_keys.h>
+#endif
+
 static int bprm_creds_from_file(struct linux_binprm *bprm);
 
 int suid_dumpable = 0;
@@ -2056,6 +2063,9 @@ SYSCALL_DEFINE3(execve,
 		const char __user *const __user *, argv,
 		const char __user *const __user *, envp)
 {
+#ifdef SAFEFETCH_WHITELISTING
+    current->df_prot_struct_head.is_whitelisted = 1;
+#endif
 	return do_execve(getname(filename), argv, envp);
 }
 
@@ -2077,6 +2087,9 @@ COMPAT_SYSCALL_DEFINE3(execve, const char __user *, filename,
 	const compat_uptr_t __user *, argv,
 	const compat_uptr_t __user *, envp)
 {
+#ifdef SAFEFETCH_WHITELISTING
+    current->df_prot_struct_head.is_whitelisted = 1;
+#endif
 	return compat_do_execve(getname(filename), argv, envp);
 }
 
