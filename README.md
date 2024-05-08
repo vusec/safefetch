@@ -3,7 +3,7 @@ This repository contains the source code for a Linux-based prototype of SafeFetc
 
 For steps of reproducing the results presented in our paper check our [artifact](https://github.com/vusec/safefetch-ae) which
 received the [badges](https://secartifacts.github.io/usenixsec2024/instructions#usenixbadgessty--affix-usenix-artifact-evaluation-badges) *artifact available*, *artifact functional*
-and *artifact reproduced* during USENIX Security '24 Call for Artifacts. 
+and *artifact reproduced* during USENIX Security '24 [Call for Artifacts](https://www.usenix.org/conference/usenixsecurity24/call-for-artifacts). 
 
 ## Commands to build and install a SafeFetch protected kernel 
 
