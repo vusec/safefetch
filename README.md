@@ -2,8 +2,8 @@ This repository contains the source code for a Linux-based prototype of SafeFetc
 *SafeFetch: Practical Double-Fetch Protection with Kernel-Fetch Caching* [paper](https://download.vusec.net/papers/safefetch_sec24.pdf) accepted for publication at the *33rd Usenix Security Symposium*, 2024.
 
 For steps of reproducing the results presented in our paper check our [artifact](https://github.com/vusec/safefetch-ae) which
-received the [badges](https://secartifacts.github.io/usenixsec2024/instructions#usenixbadgessty--affix-usenix-artifact-evaluation-badges) artifact available, artifact functional
-and artifact reproduced during USENIX Security '24 Call for Artifacts. 
+received the [badges](https://secartifacts.github.io/usenixsec2024/instructions#usenixbadgessty--affix-usenix-artifact-evaluation-badges) *artifact available*, *artifact functional*
+and *artifact reproduced* during USENIX Security '24 Call for Artifacts. 
 
 ## Commands to build and install a SafeFetch protected kernel 
 
