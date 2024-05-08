@@ -1,5 +1,5 @@
-This repository contains the source code for a Linux-based prototype of SafeFetch. The prototype is based on the [paper](https://download.vusec.net/papers/safefetch_sec24.pdf) 
-*SafeFetch: Practical Double-Fetch Protection with Kernel-Fetch Caching* accepted for publication at the *33rd Usenix Security Symposium*, 2024.
+This repository contains the source code for a Linux-based prototype of SafeFetch. The prototype is based on the 
+*SafeFetch: Practical Double-Fetch Protection with Kernel-Fetch Caching* [paper](https://download.vusec.net/papers/safefetch_sec24.pdf) accepted for publication at the *33rd Usenix Security Symposium*, 2024.
 
 For steps of reproducing the results presented in our paper check our [artifact](https://github.com/vusec/safefetch-ae) which
 received the [badges](https://secartifacts.github.io/usenixsec2024/instructions#usenixbadgessty--affix-usenix-artifact-evaluation-badges) artifact available, artifact functional
